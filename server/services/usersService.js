@@ -12,7 +12,6 @@ exports.findById = (id) => {
     return User.findById(id);
 }
 
-//contrôleur de la route PUT /todos/:id
 exports.update = (id, updatedUser) => {
     return User.findByIdAndUpdate(id, updatedUser);
 }
