@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const userService = require('../services/usersService');
+const passService = require('../services/passwordService');
 
 exports.listUsers = async (req, res) => {
     userService.list()
@@ -11,14 +12,16 @@ exports.listUsers = async (req, res) => {
     });
 }
 
-exports.postUser = (req, res) => {
+exports.postUser = async (req, res) => {
     if(!req.body.email) {
-      res.status(400).json({ error: 'Les paramètres description sont obligatoires.' })
+      res.status(400).json({ error: 'Les paramètres email sont obligatoires.' })
     }
   
     const newUser = new User({
       ...req.body
     });
+
+    newUser.password = await passService.hashPassword(newUser.password);
 
     userService.save(newUser)
     .then(() => {
