@@ -4,6 +4,10 @@ exports.list = () => {
     return Post.find();
 }
 
+exports.findByAuthor = (author) => {
+    return Post.find({author: author});
+}
+
 exports.save = (newPost) => {
     return Post.create(newPost);
 }
