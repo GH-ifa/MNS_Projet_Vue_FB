@@ -1,11 +1,15 @@
 const Post = require('../models/Post');
 
 exports.list = () => {
-    return Post.find();
+    return Post.find().populate('author').populate('comments');
 }
 
-exports.findByAuthor = (author) => {
-    return Post.find({author: author});
+exports.listByAuthor = (authorId) => {
+    return Post.find({author: authorId}).populate('author').populate('comments');
+}
+
+exports.findByAuthor = (authorId) => {
+    return Post.find({author: authorId});
 }
 
 exports.save = (newPost) => {
@@ -13,7 +17,7 @@ exports.save = (newPost) => {
 }
 
 exports.findById = (id) => {
-    return Post.findById(id);
+    return Post.findById(id).populate('author').populate('comments');
 }
 
 exports.update = (id, updatedPost) => {

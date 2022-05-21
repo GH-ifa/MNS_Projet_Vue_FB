@@ -1,15 +1,18 @@
 const express = require('express')
 const router = express.Router()
-const userCtrl = require('../controllers/posts');
+const postCtrl = require('../controllers/posts');
 
-router.get('/', userCtrl.listPosts);
+router.get('/', postCtrl.listPosts);
+router.get('/byauthor/:id', postCtrl.listPostsByAuthor);
+router.put('/like/:id', postCtrl.likePost);
 
-router.post('/', userCtrl.postPost);
+router.post('/', postCtrl.postPost);
+router.post('/comment/:id', postCtrl.addComm);
 
-router.get('/:id', userCtrl.getOnePost);
+router.get('/:id', postCtrl.getOnePost);
 
-router.delete('/:id', userCtrl.deletePost);
+router.delete('/:id', postCtrl.deletePost);
 
-router.put('/:id', userCtrl.updatePost);
+router.put('/:id', postCtrl.updatePost);
 
 module.exports = router

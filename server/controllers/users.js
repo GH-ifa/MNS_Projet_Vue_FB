@@ -1,6 +1,9 @@
 const User = require('../models/User');
 const userService = require('../services/usersService');
 const passService = require('../services/passwordService');
+const tokenService = require('../services/tokenService');
+
+//// const base64Credentials =  req.headers.authorization.split(' ')[1];
 
 exports.listUsers = async (req, res) => {
     userService.list()
@@ -14,22 +17,33 @@ exports.listUsers = async (req, res) => {
 
 exports.postUser = async (req, res) => {
     if(!req.body.email) {
-      res.status(400).json({ error: 'Les paramètres email sont obligatoires.' })
+        res.status(400).json({ error: 'Le paramètre email est obligatoire.' });
     }
-  
+    if(!req.body.password) {
+        res.status(400).json({ error: 'Le paramètre password est obligatoire.' });
+    }
+      
+    console.log('BODY', req.body);
+
     const newUser = new User({
-      ...req.body
+      ...req.body,
+      username: '',
+      photo: ''
     });
 
     newUser.password = await passService.hashPassword(newUser.password);
 
     userService.save(newUser)
-    .then(() => {
+    .then((savedUser) => {
+        const token = tokenService.createToken({email: savedUser.email});
         res.status(201).json({
-            message: 'User created.'
+            message: 'User created.',
+            id: savedUser.id,
+            token: token
         });
     })
     .catch((error) => {
+        console.log('err', error);
         res.status(400).json({error});
     });
 }
@@ -47,10 +61,13 @@ exports.getOneUser = async (req, res) => {
 }
 
 exports.updateUser = async (req, res) => {
+    console.log('update u', req.body);
+    let updatedUser = {};
+    if (req.body.username) updatedUser.username = req.body.username;
+    if (req.body.email) updatedUser.email = req.body.email;
+    if (req.body.password) updatedUser.password = await passService.hashPassword(req.body.password);
 
-    const updatedUser = new User({
-        ...req.body
-    });
+    console.log('u', updatedUser);
 
     const id = req.params.id;
     userService.update(id, updatedUser)
@@ -60,6 +77,7 @@ exports.updateUser = async (req, res) => {
         });
     })
     .catch((error) => {
+        console.log('Error', error);
         res.status(400).json({error});
     });
 }
