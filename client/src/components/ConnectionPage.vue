@@ -7,9 +7,6 @@
     </div>
 </template>
 
-
-
-
 <script>
 const axios = require('axios').default;
 import router from "../router/index";
@@ -39,7 +36,6 @@ export default {
             .then((res) => {
                 console.log('status', res.status);
                 if (res.status == 200) {
-                    console.log('gg', res);
                     this.$store.dispatch('connect', {email: res.data.email, token: res.data.token, id: res.data.id, username: res.data.username});
                     router.push('/');
                 }
@@ -54,3 +50,40 @@ export default {
     },
 }
 </script>
+
+<style>
+#connectionform {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#connectionform input {
+    width: 490px;
+    height: 50px;
+    border-radius: 30px;
+    background-color: white;
+    font-size: 18px;
+    color: black;
+    font-family: 'Inter';
+    line-height: 20px;
+    border-color: #0085FF;
+}
+
+#connectionform button {
+    width: 220px;
+    height: 50px;
+    background-color: #0085FF;
+    border-radius: 30px;
+    font-size: 18px;
+    color: white;
+    font-family: 'Inter';
+    line-height: 20px;
+    border-color: transparent;
+}
+
+input, button {
+    margin-top: 20px;
+}
+
+</style>

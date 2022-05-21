@@ -1,6 +1,6 @@
 <template>
   <div id="homepage">
-    Coucou.
+    Page d'accueil, merci de vous connecter.
   </div>
 </template>
 
@@ -17,5 +17,8 @@ export default {
   methods: {
 
   },
+  created() {
+    
+  }
 }
 </script>

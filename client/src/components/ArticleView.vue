@@ -42,19 +42,15 @@ export default {
         axios({
             method: 'get',
             baseURL: `http://localhost:3000/api/posts/${this.articleid}`,
-            // data: JSON.stringify({email: this.email, password: this.password}),
-            headers: { 'Content-Type': 'application/json' }
+            headers: this.$store.getters.headers
         })
         .then((res) => {
             console.log('status', res.status);
             if (res.status == 200) {
-                console.log('zz', res);
                 this.article = res.data;
-                // this.$store.dispatch('connect', {email: res.data.email, token: res.data.token, id: res.data.id});
-                // router.push('/');
             }
             else {
-                console.log('errzz', res);
+                console.log('err', res);
             }
         })
         .catch((error) => {
@@ -72,7 +68,7 @@ export default {
         })
         .then((res) => {
             if (res.status == 201) {
-                console.log('gg', res);
+                console.log('', res);
             }
             else {
                 console.log('err', res);
@@ -85,22 +81,28 @@ export default {
   },
 
     watch: { 
-        articleid: function(newVal) { // watch it
+        articleid: function(newVal) {
             this.updateArticle(newVal);
         }
     },
   mounted() {
-      console.log('oooo', this.articleid);
         this.updateArticle(this.articleid);
   },
 
 }
 </script>
 
-<style scoped>
-* {
-    white-space: pre;
-    color: red;
-    background-color: yellow;
+<style>
+#articleview {
+  border-radius: 30px;
+  background-color: #82E9CF;
+  color: black;
+  filter: drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.1));
+}
+
+#articleview h1 {
+  font-size: 26px;
+  margin-left: 30px;
+  margin-top: 10px;
 }
 </style>

@@ -30,8 +30,7 @@ exports.likePost = async (req, res) => {
     const postFound = await postService.findById(postId);
 
     if (postFound) {
-
-        if (postFound.author != userId) {
+        if (postFound.author._id != userId) {
             if (postFound.likes.includes(userId)) {
                 postFound.likes = postFound.likes.filter(i => i != userId);
             }
@@ -49,8 +48,7 @@ exports.likePost = async (req, res) => {
             });
         }
         else {
-
-            // like pas tes propres posts mec
+            console.log('il like son propre post !');
         }
     }
 }

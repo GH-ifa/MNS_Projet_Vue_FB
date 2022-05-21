@@ -14,7 +14,6 @@
 <script>
 const axios = require('axios').default;
 
-//réduire le content
 export default {
   name: "ArticleCard",
   data() {
@@ -54,3 +53,21 @@ export default {
   },
 }
 </script>
+
+<style>
+#articlecard {
+  border-radius: 30px;
+  background-color: white;
+  color:black;
+  filter: drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.1));
+}
+
+#articlecard h1 {
+  font-size: 26px;
+  margin-left: 30px;
+  margin-top: 10px;
+}
+
+
+
+</style>

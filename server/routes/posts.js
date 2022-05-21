@@ -1,18 +1,19 @@
 const express = require('express')
 const router = express.Router()
 const postCtrl = require('../controllers/posts');
+const tokenVerify = require('../middlewares/authentication');
 
-router.get('/', postCtrl.listPosts);
-router.get('/byauthor/:id', postCtrl.listPostsByAuthor);
-router.put('/like/:id', postCtrl.likePost);
+router.get('/', tokenVerify, postCtrl.listPosts);
+router.get('/byauthor/:id', tokenVerify, postCtrl.listPostsByAuthor);
+router.put('/like/:id', tokenVerify, postCtrl.likePost);
 
-router.post('/', postCtrl.postPost);
-router.post('/comment/:id', postCtrl.addComm);
+router.post('/', tokenVerify, postCtrl.postPost);
+router.post('/comment/:id', tokenVerify, postCtrl.addComm);
 
-router.get('/:id', postCtrl.getOnePost);
+router.get('/:id', tokenVerify, postCtrl.getOnePost);
 
-router.delete('/:id', postCtrl.deletePost);
+router.delete('/:id', tokenVerify, postCtrl.deletePost);
 
-router.put('/:id', postCtrl.updatePost);
+router.put('/:id', tokenVerify, postCtrl.updatePost);
 
 module.exports = router

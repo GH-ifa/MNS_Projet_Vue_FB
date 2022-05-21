@@ -3,8 +3,6 @@ const userService = require('../services/usersService');
 const passService = require('../services/passwordService');
 const tokenService = require('../services/tokenService');
 
-//// const base64Credentials =  req.headers.authorization.split(' ')[1];
-
 exports.listUsers = async (req, res) => {
     userService.list()
     .then((users) => {

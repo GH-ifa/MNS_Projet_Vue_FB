@@ -5,7 +5,7 @@
 </template>
 
 <script>
-// const axios = require('axios').default;
+
 import ArticleCard from "./ArticleCard.vue"
 
 export default {

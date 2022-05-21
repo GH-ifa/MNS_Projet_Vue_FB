@@ -36,7 +36,6 @@ export default {
         .then((res) => {
             if (res.status == 201) {
                 console.log('gg', res);
-                // this.$store.commit('signup', {email: this.email, password: this.password});
             }
             else {
                 console.log('err', res);
