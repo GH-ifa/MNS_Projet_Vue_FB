@@ -4,7 +4,7 @@ const userCtrl = require('../controllers/users');
 
 router.get('/', userCtrl.listUsers);
 
-router.post('/', userCtrl.postUser);
+router.post('/signup', userCtrl.postUser);
 
 router.get('/:id', userCtrl.getOneUser);
 

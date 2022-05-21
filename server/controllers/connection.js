@@ -5,7 +5,7 @@ const tokenService = require('../services/tokenService');
 
 exports.connectUser = async (req, res) => {
     const email = req.body.email;
-    const plainPassword = req.body.pass;
+    const plainPassword = req.body.password;
     const token = req.body.token;
 
     if (email && plainPassword) {
@@ -18,7 +18,7 @@ exports.connectUser = async (req, res) => {
 
 exports.connectUserByPassword = async (req, res) => {
     const email = req.body.email;
-    const plainPassword = req.body.pass;
+    const plainPassword = req.body.password;
 
     console.log('test co:', email, plainPassword);
 
@@ -28,8 +28,14 @@ exports.connectUserByPassword = async (req, res) => {
         const isPasswordCorrect = await passService.comparePasswords(plainPassword, userFound.password);
         if (isPasswordCorrect) {
             console.log('Password correct');
-            const token = tokenService.createToken(email);
-            res.status(200).json({ message: 'Connection successful!', token: token });
+            const token = tokenService.createToken({email: email});
+            res.status(200).json({
+                message: 'Connection successful!',
+                token: token,
+                id: userFound.id,
+                email: userFound.email,
+                username: userFound.username
+            });
         }
         else {
             console.log('Wrong password.');
@@ -63,8 +69,10 @@ exports.connectUserByToken = async (req, res) => {
             console.log('Connected by token!');
             res.status(200).json({
                 message: 'Connection successful!',
+                token: token,
                 id: userFound.id,
-                email: userFound.email
+                email: userFound.email,
+                username: userFound.username
             });
         }
         else {
